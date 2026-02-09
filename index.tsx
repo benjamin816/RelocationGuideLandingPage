@@ -26,7 +26,6 @@ const App = () => {
 
   // 2. Load ConvertKit Script - Native Modal
   useEffect(() => {
-    // Check if script already exists to avoid duplicates
     if (!document.querySelector(`script[src="${KIT_SCRIPT_URL}"]`)) {
       const script = document.createElement("script");
       script.src = KIT_SCRIPT_URL;
@@ -47,10 +46,10 @@ const App = () => {
           margin: 0;
           padding: 0;
           width: 100%;
-          overflow-x: hidden; /* CRITICAL: Prevents mobile horizontal scroll */
+          overflow-x: hidden;
           font-family: 'Inter', sans-serif;
-          background-color: #E8F5E9; /* accent-light */
-          color: #1F2937; /* text-dark */
+          background-color: #E8F5E9;
+          color: #1F2937;
         }
 
         /* --- VARIABLES --- */
@@ -67,35 +66,26 @@ const App = () => {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
-          padding-bottom: 40px;
+          padding-bottom: 60px;
           width: 100%;
           overflow-x: hidden;
         }
         
-        /* Hero */
+        /* Hero - Full width */
         .hero-container {
           width: 100%;
           position: relative;
           background-color: var(--primary-green);
           line-height: 0;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
         .hero-image {
           width: 100%;
           height: auto;
           display: block;
         }
-        .hero-fade {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 40%;
-          background: linear-gradient(to bottom, transparent 0%, rgba(232, 245, 233, 0.2) 60%, var(--accent-light) 100%);
-          pointer-events: none;
-        }
         
-        /* Content */
+        /* Content - Strictly Centered */
         .main-content {
           width: 100%;
           max-width: 800px;
@@ -104,23 +94,27 @@ const App = () => {
           position: relative;
           z-index: 10;
           text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
         }
         h1 {
-          font-size: 3.5rem;
+          font-size: 3.2rem;
           font-weight: 800;
           color: var(--primary-green);
-          margin-bottom: 0.2em;
+          margin-bottom: 0.1em;
           text-transform: uppercase;
           line-height: 1.1;
         }
         h2 {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           font-weight: 600;
           color: var(--secondary-green);
           margin-top: 0.5rem;
-          margin-bottom: 3rem;
+          margin-bottom: 2.5rem;
           text-transform: uppercase;
-          letter-spacing: 0.2em;
+          letter-spacing: 0.15em;
         }
         
         /* Buttons */
@@ -128,8 +122,8 @@ const App = () => {
           background-color: var(--primary-green);
           color: white;
           border: none;
-          padding: 1.25rem 3rem;
-          font-size: 1.25rem;
+          padding: 1.1rem 2.8rem;
+          font-size: 1.2rem;
           font-weight: 600;
           border-radius: 50px;
           cursor: pointer;
@@ -137,9 +131,9 @@ const App = () => {
           box-shadow: 0 10px 20px rgba(47, 82, 51, 0.2);
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           gap: 12px;
           max-width: 100%;
-          /* Ensure text wraps on very small screens */
           white-space: normal;
           text-align: center;
         }
@@ -149,44 +143,66 @@ const App = () => {
           background-color: #264229;
         }
         
-        /* Consultation */
+        /* Consultation Section */
         .consultation-card {
           background: var(--white);
-          margin-top: 5rem;
-          padding: 3rem;
+          margin-top: 4rem;
+          padding: 2.5rem 1.5rem;
           border-radius: 20px;
           box-shadow: 0 10px 40px rgba(47, 82, 51, 0.08);
           border: 1px solid rgba(47, 82, 51, 0.1);
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
         .consultation-title {
-          font-size: 1.8rem;
+          font-size: 1.6rem;
           color: var(--primary-green);
-          margin-bottom: 1.5rem;
+          margin-bottom: 1rem;
           font-weight: 700;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 10px;
-          flex-wrap: wrap;
         }
-        .calendly-container {
-          min-width: 320px;
-          height: 700px;
-          width: 100%;
+        .consultation-desc {
+          color: #666;
+          margin-bottom: 2rem;
+          font-size: 1rem;
+          max-width: 500px;
         }
 
-        /* Responsive Tweaks */
+        /* CALENDLY VIEWPORT CROP - No internal scroll, locked view */
+        .calendly-viewport {
+          width: 100%;
+          height: 520px; /* This is the visible window */
+          overflow: hidden;
+          position: relative;
+          border-radius: 12px;
+          background: #fafafa;
+        }
+        .calendly-inline-widget {
+          width: 100% !important;
+          height: 750px !important; /* Make it tall enough to avoid internal scrollbar */
+          margin-top: -75px !important; /* Hide the top header/profile area */
+        }
+
+        /* Responsive */
         @media (max-width: 640px) {
-          h1 { font-size: 2.25rem; }
-          .download-btn { width: 100%; justify-content: center; padding: 1rem; }
-          .consultation-card { padding: 1.5rem; }
+          h1 { font-size: 2.2rem; }
+          h2 { font-size: 1.1rem; margin-bottom: 2rem; }
+          .download-btn { width: 100%; padding: 1rem; }
+          .consultation-card { padding: 1.5rem 1rem; margin-top: 3rem; }
+          .consultation-title { font-size: 1.3rem; }
+          .calendly-viewport { height: 580px; }
+          .calendly-inline-widget { margin-top: -60px !important; }
         }
       `}</style>
 
-      {/* Hero */}
+      {/* Hero Section */}
       <div className="hero-container">
-        <img src={HERO_IMAGE_URL} alt="Banner" className="hero-image" referrerPolicy="no-referrer" onError={(e) => e.currentTarget.style.display = 'none'} />
-        <div className="hero-fade"></div>
+        <img src={HERO_IMAGE_URL} alt="Living in Raleigh Banner" className="hero-image" referrerPolicy="no-referrer" />
       </div>
 
       {/* Main Content */}
@@ -194,7 +210,6 @@ const App = () => {
         <h1>RALEIGH RELOCATION GUIDE</h1>
         <h2>2026 EDITION</h2>
         
-        {/* Trigger Button using ConvertKit Native Toggle */}
         <button 
           className="download-btn" 
           data-formkit-toggle={KIT_FORM_UID}
@@ -203,9 +218,19 @@ const App = () => {
         </button>
 
         <div className="consultation-card">
-          <div className="consultation-title"><CalendarIcon /><span>Schedule Your Relocation Consultation</span></div>
-          <p style={{ color: "#666", marginBottom: "2rem" }}>Ready to make the move? Book a free 15-minute intro call.</p>
-          <div className="calendly-inline-widget calendly-container" data-url="https://calendly.com/living-in-raleigh-nc/consultation?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=2f5233"></div>
+          <div className="consultation-title">
+            <CalendarIcon />
+            <span>Relocation Consultation</span>
+          </div>
+          <p className="consultation-desc">Ready to make the move? Book a free 15-minute intro call with our team.</p>
+          
+          {/* Viewport wrapper for cropping */}
+          <div className="calendly-viewport">
+            <div 
+              className="calendly-inline-widget" 
+              data-url="https://calendly.com/living-in-raleigh-nc/consultation?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=2f5233"
+            ></div>
+          </div>
         </div>
       </main>
 
